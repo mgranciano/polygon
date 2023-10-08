@@ -1,13 +1,15 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { DataSource } from 'typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { GraphQLModule } from '@nestjs/graphql';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 
 import * as Joi from '@hapi/joi';
 
 import { MssqlService } from './providers/mssql.service';
-import { DataSource } from 'typeorm';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { GqlConfigService } from './providers/gqlconfig.service';
+import { StockModule } from './modules/stock/stock.module';
 
 @Module({
   imports: [ConfigModule.forRoot({
@@ -19,16 +21,21 @@ import { AppService } from './app.service';
         .default('development')
     }),
   }),
+  GraphQLModule.forRootAsync<ApolloDriverConfig>({
+    driver: ApolloDriver,
+    useClass: GqlConfigService,
+  }),
   TypeOrmModule.forRootAsync({
     imports: [ConfigModule],
     useClass: MssqlService,
     inject: [ConfigService],
   }),
-  
+  StockModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
+
 export class AppModule {
-  constructor(private dataSource: DataSource) {}
- }
+  constructor(private dataSource: DataSource) { }
+}

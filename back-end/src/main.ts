@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
-import { Logger } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 
 import {
   RADIX_BASE,
@@ -22,6 +22,12 @@ async function bootstrap() {
   const prefix = config.get<string>(SERVER_PREFIX) || SERVER_PREFIX_DEFAULT;
   app.setGlobalPrefix(prefix);
 
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+    }),
+  );
+  
   await app.listen(port);
   logger.log(`Server is running at ${await app.getUrl()}`);
 }
