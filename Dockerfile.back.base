@@ -1,0 +1,10 @@
+FROM node:lts
+
+COPY ./back-end/package.json /root/src/back-end/package.json
+COPY ./back-end/package-lock.json /root/src/back-end/package-lock.json
+
+WORKDIR /root/src/back-end
+
+RUN npm i && npm ci
+
+EXPOSE 3000

@@ -1,0 +1,43 @@
+version: '3.'
+
+services:
+  db-mssql:
+    image: mcr.microsoft.com/mssql/server:2019-CU3-ubuntu-18.04
+    container_name: db-mssql
+    restart: always
+    env_file:
+      - ./enviroments/mssql/sqlserver.env
+      - ./enviroments/mssql/sapassword.env
+    ports:
+      - '1433:1433'
+    volumes:
+      - ./sql-server-data:/var/opt/mssql/
+      - ./sqldata:/var/opt/sqlserver/data
+      - ./sqllog:/var/opt/sqlserver/log
+      - ./sqlbackup:/var/opt/sqlserver/backup
+  builder-image:
+    image: olympus-node
+    build:
+      context: .
+      dockerfile: Dockerfile.back.base
+  market-service:
+    image: olympus-node
+    command: 'sh -c "npm run start:dev"'
+    working_dir: /root/src/back-end
+    volumes:
+      - ./back-end:/root/src/back-end
+    ports:
+      - 3000:3000
+    depends_on:
+      - builder-image
+  market-app:
+    image: olympus-node
+    command: 'sh -c "npm i"'
+    working_dir: /root/src/front-end
+    volumes:
+      - ./front-end:/root/src/front-end
+    tty: true
+    ports:
+      - 4000:4000
+    depends_on:
+      - builder-image
