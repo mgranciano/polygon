@@ -7,6 +7,15 @@ yarn-error.log*
 lerna-debug.log*
 .pnpm-debug.log*
 
+
+#Directories for sql-data
+sql-server-data
+sqlbackup
+sqldata
+sqllog
+
+
+
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
@@ -41,7 +50,8 @@ build/Release
 # Dependency directories
 node_modules/
 jspm_packages/
-
+back-end/node_modules/
+front-end/node_modules/
 # Snowpack dependency directory (https://snowpack.dev/)
 web_modules/
 
@@ -90,6 +100,8 @@ out
 # Nuxt.js build / generate output
 .nuxt
 dist
+back-end/dist
+front-end/dist
 
 # Gatsby files
 .cache/
@@ -128,3 +140,6 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# file mac 
+.DS_Store
