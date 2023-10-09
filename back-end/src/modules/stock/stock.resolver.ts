@@ -1,6 +1,6 @@
 import { Resolver } from '@nestjs/graphql';
 import { Query } from '@nestjs/graphql';
-import { Stock } from 'src/models';
+import { Stock } from '../../models';
 import { StockService } from './stock.service';
 
 
