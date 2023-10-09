@@ -1,35 +1,28 @@
-import { Args, Context, Mutation, Resolver } from '@nestjs/graphql';
-
+import { Args, Mutation, Resolver } from '@nestjs/graphql';
 
 import { AuthService } from './auth.service';
-import { LoginResponse, LoginResponseDto } from 'src/models/login-response.entity';
-import { UnauthorizedException, UseGuards } from '@nestjs/common';
-import { LocalAuthGuard } from './guards';
-
-import { Auth, User } from '../commons/decorators';
-import { User as UserEntity } from '../models';
-
+import { LoginResponse, LoginResponseDto } from '../models';
+import { LOGIN_FAILED, LOGIN_OK } from '../commons/constants';
 
 @Resolver()
 export class AuthResolver {
 
-    constructor(private authService: AuthService){}
+    constructor(private authService: AuthService) { }
 
     @Mutation(() => LoginResponse, { name: 'login' })
-    async login( @Args({name:'input', type: ()=> LoginResponseDto} ) input ) 
-    {
+    async login(@Args({ name: 'input', type: () => LoginResponseDto }) input) {
 
         const { email, password } = input;
 
-        const user = await this.authService.validateUser(email,password);
+        const user = await this.authService.validateUser(email, password);
         if (!user)
-           return{ message:'Login user or password does not match.'}
+            return { message: LOGIN_FAILED }
         const token = await this.authService.login(user);
 
         return {
-            message: 'access granted',
+            message: LOGIN_OK,
             data: token.user,
-            accessToken:token.accessToken,
+            accessToken: token.accessToken,
         };
     }
 }
