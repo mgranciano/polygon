@@ -22,12 +22,13 @@ services:
       dockerfile: Dockerfile.back.base
   market-service:
     image: olympus-node
+    container_name: back-polygon
     command: 'sh -c "npm run start:dev"'
     working_dir: /root/src/back-end
     volumes:
       - ./back-end:/root/src/back-end
     ports:
-      - 3000:3000
+      - 3005:3005
     depends_on:
       - builder-image
   market-app:
