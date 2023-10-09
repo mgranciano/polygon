@@ -43,7 +43,13 @@ type Query {
 }
 
 type Mutation {
+  getAll(input: PaginationArgs!): [Stock!]!
   login(input: LoginResponseDto!): LoginResponse!
+}
+
+input PaginationArgs {
+  limit: Int
+  offset: Int
 }
 
 input LoginResponseDto {
