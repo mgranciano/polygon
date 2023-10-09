@@ -39,14 +39,4 @@ type LoginResponse {
 
 type Query {
   Stock: [Stock!]!
-  Users: [User!]!
-}
-
-type Mutation {
-  login(input: LoginResponseDto!): LoginResponse!
-}
-
-input LoginResponseDto {
-  email: String!
-  password: String!
 }
