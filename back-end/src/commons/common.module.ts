@@ -1,9 +1,11 @@
 import { Module } from '@nestjs/common';
 import { CsvModule } from 'nest-csv-parser';
 
+import { CsvUtils } from './helpers/csvUtils';
+
 @Module({
-    providers: [],
-    exports: [],
+    providers: [CsvUtils],
+    exports: [CsvUtils],
     imports: [CsvModule]
 })
 export class CommonModule { }

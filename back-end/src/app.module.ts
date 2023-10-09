@@ -6,10 +6,18 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 
 import * as Joi from '@hapi/joi';
+import { AccessControlModule } from 'nest-access-control';
 
 import { MssqlService } from './providers/mssql.service';
 import { GqlConfigService } from './providers/gqlconfig.service';
+
 import { StockModule } from './modules/stock/stock.module';
+import { AuthModule } from './auth/auth.module';
+import { UserModule } from './modules/user/user.module';
+
+import { roles } from './commons/roles';
+
+
 
 @Module({
   imports: [ConfigModule.forRoot({
@@ -30,7 +38,10 @@ import { StockModule } from './modules/stock/stock.module';
     useClass: MssqlService,
     inject: [ConfigService],
   }),
+  AccessControlModule.forRoles(roles),
   StockModule,
+  UserModule,
+  AuthModule,
   ],
   controllers: [],
   providers: [],
