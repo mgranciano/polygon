@@ -7,10 +7,10 @@ import { StockService } from './stock.service';
 @Resolver()
 export class StockResolver {
 
-    constructor(private stockService: StockService){}
+    constructor(private stockService: StockService) { }
 
     @Query((returns) => [Stock])
-    Stock(){
+    Stock() {
         return this.stockService.findAll();
     }
 }

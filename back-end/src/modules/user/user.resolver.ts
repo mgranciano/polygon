@@ -9,15 +9,15 @@ import { Auth } from "../../commons/decorators";
 @Resolver()
 export class UserResolver {
 
-  constructor(private userService: UserService){}
-  
+  constructor(private userService: UserService) { }
+
   @Auth({
     possession: 'own',
     action: 'read',
     resource: AppResource.USER,
   })
   @Query((returns) => [User])
-  Users(@Context() context: any,){
+  Users(@Context() context: any,) {
     return this.userService.findAll();
   }
 }

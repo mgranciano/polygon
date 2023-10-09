@@ -3,19 +3,16 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { CreateUserDto } from './dto';
-import { User } from 'src/models';
-
-export interface UserFindOne {
-  id?: number;
-  email?: string;
-}
+import { User } from '../../models';
+import { CREATE_USER_ERROR_01, SEARCH_USER_ERROR_01 } from '../../commons/constants';
+import { UserFindOne } from '../../commons/interfaces';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
-  ) {}
+  ) { }
 
   findAll(): Promise<User[]> {
     return this.userRepository.find();
@@ -28,7 +25,7 @@ export class UserService {
       },
     });
     if (userExist)
-      throw new BadRequestException('User already registered with email');
+      throw new BadRequestException(CREATE_USER_ERROR_01);
 
     const newUser = this.userRepository.create(dto);
     const user = await this.userRepository.save(newUser);
@@ -47,7 +44,7 @@ export class UserService {
       .then(u => (!userEntity ? u : !!u && userEntity.id === u.id ? u : null));
 
     if (!user)
-      throw new NotFoundException('User does not exists or unauthorized');
+      throw new NotFoundException(SEARCH_USER_ERROR_01);
 
     return user;
   }

@@ -17,8 +17,6 @@ import { UserModule } from './modules/user/user.module';
 
 import { roles } from './commons/roles';
 
-
-
 @Module({
   imports: [ConfigModule.forRoot({
     isGlobal: true,
@@ -39,9 +37,9 @@ import { roles } from './commons/roles';
     inject: [ConfigService],
   }),
   AccessControlModule.forRoles(roles),
-  StockModule,
-  UserModule,
-  AuthModule,
+    StockModule,
+    UserModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],

@@ -22,3 +22,8 @@ export enum AppRoles {
   
   export const JWT_SECRET = 'JWT_SECRET';
   export const JWT_TIME_EXPIRES = 'JWT_TIME_EXPIRES';
+
+  export const LOGIN_OK = 'Access Granted.';
+  export const LOGIN_FAILED = 'Login user or password does not match.';
+  export const CREATE_USER_ERROR_01 = 'User already registered with email';
+  export const SEARCH_USER_ERROR_01 = 'User does not exists or unauthorized'
