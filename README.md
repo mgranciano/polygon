@@ -9,7 +9,7 @@
 <br />
 <div align="center">
 
- > <h3 align="center"> Taxi24</h3>
+ > <h3 align="center"> Polygon.io</h3>
 
   <p align="center">
     Construcción de un API REST con el lenguaje de programación NodeJs , Su objetivo es diseñar e implementar una API RESTful que interactúe con la API de Polygon.io
