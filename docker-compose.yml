@@ -33,12 +33,14 @@ services:
       - builder-image
   market-app:
     image: olympus-node
-    command: 'sh -c "npm i"'
+    container_name: front-polygon
+    #entrypoint: /bin/sh
+    command: 'sh -c "npm i && npm run dev"'
+    ports:
+      - 3006:3006
     working_dir: /root/src/front-end
     volumes:
-      - ./front-end:/root/src/front-end
+      - type: bind
+        source: ./front-end
+        target: /root/src/front-end
     tty: true
-    ports:
-      - 4000:4000
-    depends_on:
-      - builder-image
