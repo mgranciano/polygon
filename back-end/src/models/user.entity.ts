@@ -37,6 +37,7 @@ export class User{
   createdAt: Date;
 
   @Column({ type: 'simple-array' })
+  @Field(()=>[String])
   roles: string[];
 
   @BeforeInsert()

@@ -7,7 +7,9 @@ import { Stock } from '../../models';
 @Injectable()
 export class CsvUtils {
 
-  constructor(private readonly csvParser: CsvParser) {}
+  constructor(private readonly csvParser: CsvParser) {
+    console.log(process.cwd())
+  }
 
   async parseCsvToArray(fileName: string): Promise<any> {
     const filePath = `${process.cwd()}/data/${fileName}`;
