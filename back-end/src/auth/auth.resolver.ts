@@ -1,7 +1,7 @@
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 
 import { AuthService } from './auth.service';
-import { LoginResponse, LoginResponseDto } from '../models';
+import { LoginResponse, LoginRequest } from '../models';
 import { LOGIN_FAILED, LOGIN_OK } from '../commons/constants';
 
 @Resolver()
@@ -10,7 +10,7 @@ export class AuthResolver {
     constructor(private authService: AuthService) { }
 
     @Mutation(() => LoginResponse, { name: 'login' })
-    async login(@Args({ name: 'input', type: () => LoginResponseDto }) input) {
+    async login(@Args({ name: 'input', type: () => LoginRequest }) input) {
 
         const { email, password } = input;
 

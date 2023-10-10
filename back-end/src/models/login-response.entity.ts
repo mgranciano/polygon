@@ -15,7 +15,7 @@ export class LoginResponse {
 }
 
 @InputType()
-export class LoginResponseDto {
+export class LoginRequest {
     @Field()
     email: string;
     @Field()

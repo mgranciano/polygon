@@ -5,7 +5,7 @@ import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto';
 import { User } from '../../models';
 import { CREATE_USER_ERROR_01, SEARCH_USER_ERROR_01 } from '../../commons/constants';
-import { UserFindOne } from '../../commons/interfaces';
+import { UserFindOne } from '../../commons/intefaces/db/mssql.interfaces';
 
 @Injectable()
 export class UserService {

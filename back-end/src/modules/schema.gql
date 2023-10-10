@@ -29,6 +29,7 @@ type User {
   name: String!
   lastName: String!
   email: String!
+  roles: [String!]!
 }
 
 type LoginResponse {
@@ -37,14 +38,113 @@ type LoginResponse {
   data: User
 }
 
+type Result {
+  v: Float
+  vw: Float
+  o: Float
+  c: Float
+  h: Float
+  l: Float
+  t: Float
+  n: Float
+}
+
+type AggregatesResponse {
+  ticker: String!
+  queryCount: Int!
+  resultsCount: Int!
+  adjusted: Boolean
+  results: [Result!]
+  status: String!
+  request_id: String!
+  count: Int!
+  error: String
+}
+
+type InfoTicker {
+  logo: String!
+  ticker: String!
+  name: String!
+  companyDescription: String
+  closePrice: Float!
+  highestPrice: Float!
+  lowestPrice: Float!
+  openPrice: Float!
+  tradingVolume: Float!
+  status: String!
+  error: String
+}
+
+type Data {
+  ticker: String!
+  name: String!
+  market: String!
+  locale: String!
+  primary_exchange: String!
+  type: String!
+  active: Boolean!
+  currency_name: String!
+  cik: String!
+  composite_figi: String!
+  share_class_figi: String!
+  last_updated_utc: String!
+}
+
+type TickerGenericResponse {
+  count: Int!
+  next_url: String!
+  request_id: String!
+  results: [Data!]
+  status: String!
+  error: String
+}
+
+type ResultData {
+  ticker: String!
+  name: String!
+  market: String!
+  locale: String!
+  primary_exchange: String!
+  type: String!
+  active: Boolean!
+  currency_name: String!
+  cik: String!
+  composite_figi: String!
+  share_class_figi: String!
+  last_updated_utc: String!
+  info_ticker: InfoTicker
+}
+
 type Query {
   Stock: [Stock!]!
   Users: [User!]!
+  getRealTimeData(
+    """input instrument"""
+    ticker: String!
+  ): InfoTicker!
+  getHistoryTimeData(
+    """input data ticker, start date  and end date for search"""
+    input: HistoryRequest!
+  ): AggregatesResponse!
+  getAllTicker: TickerGenericResponse!
+}
+
+input HistoryRequest {
+  """ticker select """
+  ticket: String!
+
+  """start date in format YYYY-MM-DD"""
+  start: String!
+
+  """end date in format YYYY-MM-DD"""
+  end: String!
 }
 
 type Mutation {
   getAll(input: PaginationArgs!): [Stock!]!
-  login(input: LoginResponseDto!): LoginResponse!
+  createStock(fileName: String!): [Stock!]!
+  newUser(input: CreateUserDto!): User!
+  login(input: LoginRequest!): LoginResponse!
 }
 
 input PaginationArgs {
@@ -52,7 +152,21 @@ input PaginationArgs {
   offset: Int
 }
 
-input LoginResponseDto {
+input CreateUserDto {
+  """User name"""
+  name: String!
+
+  """Last name"""
+  lastName: String
+
+  """email input for login"""
+  email: String!
+
+  """password input for login"""
+  password: String!
+}
+
+input LoginRequest {
   email: String!
   password: String!
 }
